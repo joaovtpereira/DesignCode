@@ -29,7 +29,7 @@ struct ContentView: View {
                     .fontWeight(.semibold)
                     
                     Divider()
-
+                    
                     VStack(alignment: .leading) {
                         Text("Type")
                             .foregroundColor(.secondary)
@@ -61,6 +61,12 @@ struct ContentView: View {
                     }
                     .padding()
                     .frame(height: 44)
+                    .overlay(
+                        UnevenRoundedRectangle(cornerRadii: RectangleCornerRadii(
+                            topLeading: 0, bottomLeading: 20, bottomTrailing: 0, topTrailing: 20
+                        ))
+                            .strokeBorder(linearGradient)
+                    )
                     .offset(x: -20, y: 20)
                     
                     Spacer()
@@ -68,18 +74,32 @@ struct ContentView: View {
                     Image(systemName: "square.and.arrow.down")
                         .padding()
                         .frame(height: 44)
+                    .overlay(
+                        UnevenRoundedRectangle(cornerRadii: RectangleCornerRadii(
+                            topLeading: 20, bottomLeading: 0, bottomTrailing: 20, topTrailing: 0
+                        ))
+                            .strokeBorder(linearGradient)
+                    )
                         .offset(x: 20, y: 20)
                 }
             }
             .padding(20.0)
             .background(.regularMaterial)
             .cornerRadius(20.0)
+            .overlay(
+                RoundedRectangle(cornerRadius: 20)
+                    .strokeBorder(linearGradient)
+            )
             .padding(20)
             .offset(y: 80)
         }
         .frame(maxWidth: 400)
         .padding(20)
         .dynamicTypeSize(.xSmall ... .xLarge)
+    }
+    
+    var linearGradient: LinearGradient {
+        LinearGradient(colors: [.clear, .primary.opacity(0.3), .clear], startPoint: .topLeading, endPoint: UnitPoint.bottomTrailing)
     }
 }
 
