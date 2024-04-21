@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State var isTapped = false
+    
     var body: some View {
         ZStack {
             Image(.image1)
@@ -54,8 +56,10 @@ struct ContentView: View {
                 HStack {
                     HStack {
                         Image(systemName: "ellipsis")
+                            .symbolEffect(.pulse)
                         Divider()
                         Image(systemName: "sparkle.magnifyingglass")
+                            .symbolEffect(.scale.up)
                         Divider()
                         Image(systemName: "face.smiling")
                     }
@@ -65,7 +69,7 @@ struct ContentView: View {
                         UnevenRoundedRectangle(cornerRadii: RectangleCornerRadii(
                             topLeading: 0, bottomLeading: 20, bottomTrailing: 0, topTrailing: 20
                         ))
-                            .strokeBorder(linearGradient)
+                        .strokeBorder(linearGradient)
                     )
                     .offset(x: -20, y: 20)
                     
@@ -74,12 +78,12 @@ struct ContentView: View {
                     Image(systemName: "square.and.arrow.down")
                         .padding()
                         .frame(height: 44)
-                    .overlay(
-                        UnevenRoundedRectangle(cornerRadii: RectangleCornerRadii(
-                            topLeading: 20, bottomLeading: 0, bottomTrailing: 20, topTrailing: 0
-                        ))
+                        .overlay(
+                            UnevenRoundedRectangle(cornerRadii: RectangleCornerRadii(
+                                topLeading: 20, bottomLeading: 0, bottomTrailing: 20, topTrailing: 0
+                            ))
                             .strokeBorder(linearGradient)
-                    )
+                        )
                         .offset(x: 20, y: 20)
                 }
             }
@@ -92,6 +96,34 @@ struct ContentView: View {
             )
             .padding(20)
             .offset(y: 80)
+            
+            HStack (spacing: 20) {
+                Image(systemName: "wand.and.rays")
+                    .frame(width: 44)
+                    .symbolEffect(.variableColor.iterative.reversing, options: .speed(3), value: isTapped)
+                    .symbolEffect(.bounce, value: isTapped)
+                
+                Image(systemName: isTapped  ? "pause.fill" : "play.fill")
+                    .frame(width: 44)
+                    .contentTransition(.symbolEffect(.replace))
+                    .onTapGesture {
+                        isTapped.toggle()
+                    }
+                
+                Image(systemName: "bell.and.waves.left.and.right.fill")
+                    .frame(width: 44)
+                    .symbolEffect(.bounce, options: .speed(3).repeat(3), value: isTapped)
+            }
+            .foregroundStyle(.primary, .white)
+            .font(.largeTitle)
+            .padding(20)
+            .background(.ultraThinMaterial)
+            .overlay(
+                RoundedRectangle(cornerRadius: 20)
+                    .strokeBorder(linearGradient)
+            )
+            .cornerRadius(20)
+            .offset(y: -44)
         }
         .frame(maxWidth: 400)
         .padding(20)
@@ -99,7 +131,7 @@ struct ContentView: View {
     }
     
     var linearGradient: LinearGradient {
-        LinearGradient(colors: [.clear, .primary.opacity(0.3), .clear], startPoint: .topLeading, endPoint: UnitPoint.bottomTrailing)
+        LinearGradient(colors: [.clear, .primary.opacity(0.3), .clear], startPoint: .topLeading, endPoint: .bottomTrailing)
     }
 }
 
