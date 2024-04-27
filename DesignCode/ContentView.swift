@@ -22,7 +22,7 @@ struct ContentView: View {
                 .frame(width: isTapped ? 390 : 360)
                 .cornerRadius(isTapped ? 0 : 20)
                 .offset(y: isTapped ? -200 : 0)
-                .phaseAnimator([1,1.1]) {
+                .phaseAnimator([1,1.1], trigger: isTapped) {
                     content, phase in
                     content.scaleEffect(phase)
                 }
